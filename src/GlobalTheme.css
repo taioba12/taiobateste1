@@ -1,0 +1,12 @@
+/* Tema global para todas as cenas */
+body {
+    background-color: black;
+    color: white;
+  }
+  
+  .scene-wrapper {
+    margin-top: 100px;
+    margin-left: 220px;
+  }
+
+  

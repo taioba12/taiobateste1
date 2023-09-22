@@ -1,36 +1,52 @@
-.sidebar {
-    width: 250px;
-    position: fixed;
-    top: 0;
-    left: 0;
-    height: 100%;
-    background-color: #2c2c2c;
-    transition: 0.5s;
-    overflow-y: auto;
-  }
-  
-  .sidebar.collapsed {
-    width: 70px;
-  }
-  
-  .sidebarItem {
-    padding: 16px;
-    text-decoration: none;
-    font-size: 25px;
-    color: #818181;
-    display: flex;
-    align-items: center;
-    background: none;
-    border: none;
-    cursor: pointer;
-    text-align: left;
-  
-  }
-  
-  .sidebarItemIcon {
-    margin-right: 16px;
-  }
-  
-  .sidebarItem:hover {
-    color: #f1f1f1;
-  }
+.Sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 200px;
+  background-color: #333;
+  color: white;
+  transition: width 0.3s ease;
+}
+
+.Sidebar.collapsed {
+  width: 60px;
+}
+
+.Sidebar ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  width: 100%;
+  margin-top: 200px;
+}
+
+.Sidebar li {
+  width: 100%;
+  text-align: center;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start; /* Alinha os itens à esquerda */
+}
+
+.Sidebar a {
+  color: white;
+  text-decoration: none;
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.Sidebar a > svg {
+  margin-right: 10px;  /* Espaço à direita do ícone */
+}
+
+.Sidebar.collapsed a > svg {
+  margin-right: 0;  /* Remove o espaço à direita do ícone quando colapsado */
+}
+
+.Sidebar a:hover {
+  background-color: #555;
+}

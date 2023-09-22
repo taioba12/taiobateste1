@@ -1,12 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { Paper, TextField, Autocomplete, Modal, IconButton } from '@mui/material';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import './Main.css';
 import './Sidebar.css';
-import HomeIcon from '@mui/icons-material/Home';
-import FolderIcon from '@mui/icons-material/Folder';
-import StarIcon from '@mui/icons-material/Star';
+import './GlobalTheme.css';
 
 function Main() {
   const [searchTerms, setSearchTerms] = useState([]);
@@ -15,7 +13,6 @@ function Main() {
   const [allHashtags, setAllHashtags] = useState([]);
   const [openModal, setOpenModal] = useState(false);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
-  const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
 
   useEffect(() => {
     const imageList = [
@@ -35,27 +32,35 @@ function Main() {
     setImages(imageList);
   }, []);
 
+  const nextImage = useCallback(() => {
+    setCurrentImageIndex((prevIndex) => (prevIndex + 1) % filteredImages.length);
+  }, [filteredImages.length]);
+
+  const prevImage = useCallback(() => {
+    setCurrentImageIndex((prevIndex) => (prevIndex - 1 + filteredImages.length) % filteredImages.length);
+  }, [filteredImages.length]);
+
   useEffect(() => {
+    const handleKeydown = (e) => {
+      switch (e.key) {
+        case 'ArrowLeft':
+          prevImage();
+          break;
+        case 'ArrowRight':
+          nextImage();
+          break;
+        default:
+          break;
+      }
+    };
+
     if (openModal) {
       window.addEventListener('keydown', handleKeydown);
     }
     return () => {
       window.removeEventListener('keydown', handleKeydown);
     };
-  }, [openModal, currentImageIndex, filteredImages]);
-
-  const handleKeydown = (e) => {
-    switch (e.key) {
-      case 'ArrowLeft':
-        prevImage();
-        break;
-      case 'ArrowRight':
-        nextImage();
-        break;
-      default:
-        break;
-    }
-  };
+  }, [openModal, currentImageIndex, filteredImages, prevImage, nextImage]);
 
   const handleSearch = () => {
     const results = images.filter(image => 
@@ -73,32 +78,10 @@ function Main() {
     setOpenModal(false);
   };
 
-  const nextImage = () => {
-    setCurrentImageIndex((prevIndex) => (prevIndex + 1) % filteredImages.length);
-  };
 
-  const prevImage = () => {
-    setCurrentImageIndex((prevIndex) => (prevIndex - 1 + filteredImages.length) % filteredImages.length);
-  };
 
   return (
     <div className="mainContainer">
-      <div className={`sidebar ${isSidebarCollapsed ? 'collapsed' : ''}`} 
-           onMouseEnter={() => setIsSidebarCollapsed(false)} 
-           onMouseLeave={() => setIsSidebarCollapsed(true)}>
-        <a href="#" className="sidebarItem">
-          <HomeIcon className="sidebarItemIcon"/>
-          {!isSidebarCollapsed && 'Início'}
-        </a>
-        <a href="/files" className="sidebarItem">
-          <FolderIcon className="sidebarItemIcon"/>
-          {!isSidebarCollapsed && 'Files'}
-        </a>
-        <a href="#" className="sidebarItem">
-          <StarIcon className="sidebarItemIcon"/>
-          {!isSidebarCollapsed && 'Favoritos'}
-        </a>
-      </div>
       <Paper elevation={3} className="searchBox">
         <Autocomplete
           multiple
