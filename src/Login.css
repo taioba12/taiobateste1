@@ -1,0 +1,14 @@
+.loginContainer {
+    height: 100vh;
+    background: linear-gradient(90deg, rgb(111, 41, 158) 0%, rgb(115, 29, 253) 50%, rgb(12, 39, 189) 100%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .loginBox {
+    background-color: black;
+    padding: 20px;
+    text-align: center;
+  }
+  

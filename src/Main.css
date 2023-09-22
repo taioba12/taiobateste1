@@ -1,0 +1,58 @@
+.mainContainer {
+    height: 100vh;
+    background-color: #1b1b1b;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .searchBox {
+    width: 50%;
+    padding: 15px;
+    margin-bottom: 20px;
+  }
+  
+  .imageContainer {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  
+  .imageItem {
+    width: 150px;
+    margin: 5px;
+    transition: transform .2s;
+  }
+  
+  .imageItem:hover {
+    transform: scale(1.1);
+  }
+  
+
+  .modalContent {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: transparent;
+    padding: 20px;
+    display: flex;
+    align-items: center;
+  }
+  
+  .modalImage {
+    max-width: 80%;
+    max-height: 80vh;
+    margin: 0 20px;
+  }
+
+  .arrow {
+    color: #FFFFFF; /* Isso vai mudar a cor da seta para branco */
+  }
+
+  .modalContent {
+    /* ... seu código anterior ... */
+    outline: none;
+  }
+  
