@@ -1,13 +1,15 @@
 import React, { useState } from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Sidebar from './Sidebar';
-import Login from './Login';
 import Main from './Main';
 import Files from './Files';
-import Favorites from './Favorites';  // Importe este componente
+import Favorites from './Favorites';
+import Login from './Login';
+import './App.css';
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [favorites, setFavorites] = useState([]);
 
   return (
     <Router>
@@ -16,9 +18,10 @@ function App() {
           <>
             <Sidebar />
             <Routes>
-              <Route path="/" element={<Main />} />
-              <Route path="/files" element={<Files />} />
-              <Route path="/favorites" element={<Favorites />} />  {/* Adicione esta rota */}
+              <Route path="/" element={<Main favorites={favorites} setFavorites={setFavorites} />} />
+              <Route path="/files" element={<Files favorites={favorites} setFavorites={setFavorites} />} />
+              <Route path="/favorites" element={<Favorites favorites={favorites} setFavorites={setFavorites} />} />
+              {/* Adicione outras rotas aqui, se necessário */}
             </Routes>
           </>
         ) : (

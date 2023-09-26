@@ -5,8 +5,9 @@ import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import './Main.css';
 import './Sidebar.css';
 import './GlobalTheme.css';
+import StarIcon from '@mui/icons-material/Star';
 
-function Main() {
+function Main({ favorites, setFavorites }) {
   const [searchTerms, setSearchTerms] = useState([]);
   const [images, setImages] = useState([]);
   const [filteredImages, setFilteredImages] = useState([]);
@@ -27,40 +28,28 @@ function Main() {
       { id: 9, filename: 'image9.jpg', hashtags: ['#teste', '#vida'] },
       { id: 10, filename: 'image10.jpg', hashtags: ['#teste', '#saúde'] },
     ];
-    const allHash = imageList.map(img => img.hashtags).flat();
+    const allHash = imageList.map(image => image.hashtags).flat();
     setAllHashtags([...new Set(allHash)]);
     setImages(imageList);
   }, []);
 
+  const toggleFavorite = (imageFilename) => {
+    const isFavorite = favorites.includes(imageFilename);
+    if (isFavorite) {
+      setFavorites(favorites.filter(fav => fav !== imageFilename));
+    } else {
+      setFavorites([...favorites, imageFilename]);
+    }
+  };
+
+
   const nextImage = useCallback(() => {
-    setCurrentImageIndex((prevIndex) => (prevIndex + 1) % filteredImages.length);
+    setCurrentImageIndex((previousIndex) => (previousIndex + 1) % filteredImages.length);
   }, [filteredImages.length]);
 
   const prevImage = useCallback(() => {
-    setCurrentImageIndex((prevIndex) => (prevIndex - 1 + filteredImages.length) % filteredImages.length);
+    setCurrentImageIndex((previousIndex) => (previousIndex - 1 + filteredImages.length) % filteredImages.length);
   }, [filteredImages.length]);
-
-  useEffect(() => {
-    const handleKeydown = (e) => {
-      switch (e.key) {
-        case 'ArrowLeft':
-          prevImage();
-          break;
-        case 'ArrowRight':
-          nextImage();
-          break;
-        default:
-          break;
-      }
-    };
-
-    if (openModal) {
-      window.addEventListener('keydown', handleKeydown);
-    }
-    return () => {
-      window.removeEventListener('keydown', handleKeydown);
-    };
-  }, [openModal, currentImageIndex, filteredImages, prevImage, nextImage]);
 
   const handleSearch = () => {
     const results = images.filter(image => 
@@ -78,8 +67,6 @@ function Main() {
     setOpenModal(false);
   };
 
-
-
   return (
     <div className="mainContainer">
       <Paper elevation={3} className="searchBox">
@@ -94,8 +81,8 @@ function Main() {
               label="Buscar..." 
               variant="outlined" 
               fullWidth 
-              onKeyDown={(e) => {
-                if (e.key === 'Enter') {
+              onKeyDown={(event) => {
+                if (event.key === 'Enter') {
                   handleSearch();
                 }
               }}
@@ -105,29 +92,34 @@ function Main() {
             setSearchTerms(newValue);
           }}
         />
-      </Paper>
-      <div className="imageContainer">
-        {filteredImages.map((image, index) => (
+       </Paper>
+    <div className="imageContainer">
+      {filteredImages.map((image, index) => (
+        <div key={image.id} className="imageWrapper">
           <img 
-            key={image.id} 
             src={`./images/${image.filename}`} 
             alt={image.filename} 
             className="imageItem" 
             onClick={() => handleOpenModal(index)}
           />
-        ))}
-      </div>
-      <Modal open={openModal} onClose={handleCloseModal}>
-        <div className="modalContent">
-          <IconButton onClick={prevImage} style={{ color: 'white' }}><ArrowBackIcon /></IconButton>
-          <img 
-            src={`./images/${filteredImages[currentImageIndex]?.filename}`} 
-            alt={filteredImages[currentImageIndex]?.filename} 
-            className="modalImage"
-          />
-          <IconButton onClick={nextImage} style={{ color: 'white' }}><ArrowForwardIcon /></IconButton>
         </div>
-      </Modal>
+      ))}
+    </div>
+    <Modal open={openModal} onClose={handleCloseModal}>
+      <div className="modalContent">
+      <IconButton onClick={prevImage} style={{ color: 'white' }}><ArrowBackIcon /></IconButton>
+        <img 
+          src={`./images/${filteredImages[currentImageIndex]?.filename}`} 
+          alt={filteredImages[currentImageIndex]?.filename} 
+          className="modalImage"
+        />
+        <StarIcon 
+          className={favorites.includes(filteredImages[currentImageIndex]?.filename) ? 'starIconFilled' : 'starIcon'}
+          onClick={() => toggleFavorite(filteredImages[currentImageIndex]?.filename)}
+        />
+          <IconButton onClick={nextImage} style={{ color: 'white' }}><ArrowForwardIcon /></IconButton>
+      </div>
+    </Modal>
     </div>
   );
 }

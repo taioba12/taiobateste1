@@ -2,19 +2,18 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { Modal, IconButton } from '@mui/material';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import StarIcon from '@mui/icons-material/Star';
 import './GlobalTheme.css';
 
-function Files() {
+function Files({ favorites, setFavorites }) {
   const [images, setImages] = useState([]);
   const [openModal, setOpenModal] = useState(false);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
   useEffect(() => {
-    // Lista de nomes de imagens na pasta /images (substitua pelos nomes reais dos arquivos)
-    const imageNames = 
-    [
-    'image1.jpg', 
-    'image2.jpg', 
+    const imageNames = [
+      'image1.jpg',
+      'image2.jpg',
     'image3.jpg',
     'image4.jpg',
     'image5.jpg',
@@ -27,36 +26,18 @@ function Files() {
     setImages(imageNames);
   }, []);
 
-
-const nextImage = useCallback(() => {
-  setCurrentImageIndex((prevIndex) => (prevIndex + 1) % images.length);
-}, [images.length]);
-
-const prevImage = useCallback(() => {
-  setCurrentImageIndex((prevIndex) => (prevIndex - 1 + images.length) % images.length);
-}, [images.length]);
-
-useEffect(() => {
-  const handleKeydown = (e) => {
-    switch (e.key) {
-      case 'ArrowLeft':
-        prevImage();
-        break;
-      case 'ArrowRight':
-        nextImage();
-        break;
-      default:
-        break;
-    }
+  const toggleFavorite = (imageFilename) => {
+    const isFavorite = favorites.includes(imageFilename);
+    setFavorites(isFavorite ? favorites.filter(fav => fav !== imageFilename) : [...favorites, imageFilename]);
   };
 
-  if (openModal) {
-    window.addEventListener('keydown', handleKeydown);
-  }
-  return () => {
-    window.removeEventListener('keydown', handleKeydown);
-  };
-}, [openModal, currentImageIndex, images, nextImage, prevImage]);
+  const nextImage = useCallback(() => {
+    setCurrentImageIndex((prevIndex) => (prevIndex + 1) % images.length);
+  }, [images.length]);
+
+  const prevImage = useCallback(() => {
+    setCurrentImageIndex((prevIndex) => (prevIndex - 1 + images.length) % images.length);
+  }, [images.length]);
 
   const handleOpenModal = (index) => {
     setCurrentImageIndex(index);
@@ -67,10 +48,9 @@ useEffect(() => {
     setOpenModal(false);
   };
 
-
   return (
     <div className="scene-wrapper">
-          <h1>Todos os Arquivos</h1>  {/* Adicionado título */}
+      <h1>Todos os Arquivos</h1>
       <div className="imageContainer">
         {images.map((image, index) => (
           <img 
@@ -91,6 +71,10 @@ useEffect(() => {
             alt={images[currentImageIndex]} 
             className="modalImage"
           />
+          <StarIcon 
+            className={favorites.includes(images[currentImageIndex]) ? 'starIconFilled' : 'starIcon'}
+            onClick={() => toggleFavorite(images[currentImageIndex])}
+          />
           <IconButton onClick={nextImage} style={{ color: 'white' }}><ArrowForwardIcon /></IconButton>
         </div>
       </Modal>
@@ -99,3 +83,4 @@ useEffect(() => {
 }
 
 export default Files;
+

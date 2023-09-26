@@ -1,14 +1,47 @@
+/* Estilos para o contêiner principal */
 .loginContainer {
-    height: 100vh;
-    background: linear-gradient(90deg, rgb(111, 41, 158) 0%, rgb(115, 29, 253) 50%, rgb(12, 39, 189) 100%);
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  height: 100vh;
+  background: linear-gradient(90deg, rgb(111, 41, 158) 0%, rgb(115, 29, 253) 50%, rgb(12, 39, 189) 100%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Estilos para a caixa de login */
+.loginBox {
+  background-color: #1a1a1a; /* Cinza muito escuro */
+  padding: 20px;
+  text-align: center;
+  border-radius: 8px; /* Cantos arredondados para tornar a caixa mais atraente */
+  width: 300px; /* Define uma largura fixa para a caixa */
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2); /* Adiciona sombra para efeito de elevação */
+}
+
+/* Estilos para o título da caixa de login */
+.loginBox .loginTitle {
+  font-size: 24px;
+  color: #fff; /* Texto branco */
+  margin-bottom: 20px; /* Espaço inferior */
+}
+
+/* Estilos para os campos de entrada */
+.loginBox .MuiTextField-root {
+  margin-bottom: 15px; /* Espaçamento entre os campos de entrada */
+  width: 100%; /* Ocupa toda a largura disponível */
+}
+
+/* Estilo para o botão de login */
+.loginBox .MuiButton-root {
+  width: 100%; /* Ocupa toda a largura disponível */
+  background-color: #3f51b5; /* Cor de fundo do botão */
+  color: #fff; /* Texto branco */
+  &:hover {
+    background-color: #2f3d9e; /* Cor de fundo do botão no hover */
   }
-  
-  .loginBox {
-    background-color: black;
-    padding: 20px;
-    text-align: center;
-  }
-  
+}
+
+/* Estilo para o aviso de senha incorreta */
+.loginBox .MuiTypography-root {
+  color: red;
+  margin-top: 10px;
+}

@@ -7,6 +7,77 @@ body {
   .scene-wrapper {
     margin-top: 100px;
     margin-left: 220px;
+    margin-right: 60px;
   }
 
+  /* Esconde a barra de rolagem padrão */
+::-webkit-scrollbar {
+    width: 10px; /* Largura da barra de rolagem */
+  }
+  
+  /* Cor do fundo da barra de rolagem */
+  ::-webkit-scrollbar-track {
+    background: #333; /* Cor de fundo */
+  }
+  
+  /* Cor da barra de rolagem em si */
+  ::-webkit-scrollbar-thumb {
+    background: #666; /* Cor da barra */
+    border-radius: 5px; /* Borda arredondada */
+  }
+  
+  /* Hover na barra de rolagem */
+  ::-webkit-scrollbar-thumb:hover {
+    background: #999; /* Cor da barra quando o mouse passa por cima */
+  }
+
+  .starIcon {
+    color: white;
+    position: absolute;
+    top: 50px;
+    right: 70px;
+    cursor: pointer;
+    z-index: 1000;
+    transform: scale(1.2);;
+  }
+  
+  .starIconFilled {
+    color: rgb(255, 238, 4);
+    position: absolute;
+    top: 50px;
+    right: 70px;
+    cursor: pointer;
+    z-index: 1000;
+    font-size: 2em;
+    transform: scale(1.2);
+  }
+
+  .fadeOutDown {
+    animation: fadeOutDown 0.5s ease forwards;
+  }
+  
+  @keyframes fadeOutDown {
+    0% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    100% {
+      opacity: 0;
+      transform: translateY(100px);
+    }
+  }
+
+  .imageItem {
+    width: 250px;  /* Ajuste para o tamanho desejado */
+    height: auto;
+    /* outras propriedades */
+  }
+  
+
+  .modalContent {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+  }
   
